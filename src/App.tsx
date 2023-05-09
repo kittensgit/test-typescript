@@ -1,25 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+
+const App: React.FC = () => {
+
+  const [player1Counter, setPlayer1Counter] = useState(10)
+  const [player2Counter, setPlayer2Counter] = useState(10)
+
+  const commonMinus = () => {
+    setPlayer1Counter((actual) => actual - 1)
+    setPlayer2Counter((actual) => actual - 1)
+  }
+
+  console.log('render app')
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <div>ivan</div>
+        <div>{player1Counter}</div>
+        <button onClick={() => { setPlayer1Counter((actual) => actual + 1) }}>+</button>
+      </div>
+      <hr />
+      <div>
+        <div>petya</div>
+        <div>{player2Counter}</div>
+        <button onClick={() => { setPlayer2Counter((actual) => actual + 1) }}>+</button>
+      </div>
+      <hr />
+      <button onClick={commonMinus}>-</button>
+      <button onClick={() => {
+        setPlayer1Counter(10)
+        setPlayer2Counter(10)
+      }
+      }>reset</button>
+    </div >
   );
 }
 
