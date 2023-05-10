@@ -1,18 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-
-export type UsersType =  Array<[number, number]>
-
-
-
+import GithubPage from './GithubPage';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <App />
+  <GithubPage />
 );
 
 // If you want to start measuring performance in your app, pass a function
