@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import s from './Github.module.css'
-import axios from 'axios'
+import List from './List'
+import UserInfo from './UserInfo'
+import Search from './Search'
 
-type SearchUserType = {
+export type SearchUserType = {
   login: string
   id: number
 }
 
-type SearchResult = {
+export type SearchResult = {
   items: SearchUserType[]
+}
+
+export type UserType = {
+  login: string
+  id: number
+  avatar_url: string
+  followers: number
 }
 
 const GithubPage = () => {
 
+  let initialSeacrhState = 'href'
+
   const [selectedUser, setSelectedUser] = useState<SearchUserType | null>(null)
-  const [users, setUsers] = useState<SearchUserType[]>([])
+  const [searchTerm, setSearchTerm] = useState(initialSeacrhState)
 
   useEffect(() => {
     if (selectedUser) {
@@ -22,33 +33,15 @@ const GithubPage = () => {
     }
   }, [selectedUser])
 
-  useEffect(() => {
-    axios.get<SearchResult>('https://api.github.com/search/users?q=hreff')
-      .then(res => setUsers(res.data.items))
-  }, [])
 
   return (
     <div className={s.container}>
       <div>
-        <div>
-          <input type='text' placeholder='search' /><button>find</button>
-        </div>
-        <ul>
-          {
-            users.map(u => <li
-              key={u.id}
-              className={selectedUser === u ? s.selected : ''}
-              onClick={() => {
-                setSelectedUser(u)
-              }}
-            >{u.login}</li>)
-          }
-        </ul>
+        <Search value={searchTerm} onSubmit={(value: string) => { setSearchTerm(value) }} />
+        <button onClick={() => setSearchTerm(initialSeacrhState)}>reset</button>
+        <List term={searchTerm} onUserSelected={setSelectedUser} selectedUser={selectedUser} />
       </div>
-      <div>
-        <h2>usersname</h2>
-        <div>details</div>
-      </div>
+      <UserInfo selectedUser={selectedUser} />
     </div>
   )
 }
