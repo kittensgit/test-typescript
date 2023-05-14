@@ -19,8 +19,8 @@ const UserInfo = (props: UserInfoPropsType) => {
             axios
                 .get<UserType>(`https://api.github.com/search/users/${props.selectedUser.login}`)
                 .then(res => {
-                    setUserDetails(res.data)
                     setSeconds(startTimerSeconds)
+                    setUserDetails(res.data)
                 })
         }
     }, [props.selectedUser])
@@ -34,7 +34,7 @@ const UserInfo = (props: UserInfoPropsType) => {
 
     return (
         <div>
-            <Timer seconds={seconds} onChange={setSeconds} />
+            <Timer seconds={seconds} onChange={setSeconds} timerKey={userDetails?.id.toString()} />
             <h2>{userDetails?.login}</h2>
             {userDetails &&
                 <div>

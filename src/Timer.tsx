@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 type TimerPropsType = {
     seconds: number
     onChange: (actualSeconds: number) => void
+    timerKey: string | undefined
 }
 
 const Timer = (props: TimerPropsType) => {
@@ -16,10 +17,11 @@ const Timer = (props: TimerPropsType) => {
     }, [seconds])
 
     useEffect(() => {
-        // setInterval(() => {
-        //  setSeconds((prev) => prev - 1) 
+        // const intervalId = setInterval(() => {
+        //     setSeconds((prev) => prev - 1)
         // }, 1000)
-    }, [])
+        // return () => { clearInterval(intervalId) }
+    }, [props.timerKey])
 
     return (
         <div>{seconds}</div>
